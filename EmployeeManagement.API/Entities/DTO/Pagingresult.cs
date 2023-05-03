@@ -8,7 +8,7 @@
     /// Danh sach nhan vien
     /// </summary>
     {
-        public List<Employee> Data { get; set; }
+        public List<object> Data { get; set; }
         /// <summary>
         /// Tong so ban ghi thoa man dieu kien
         /// </summary>

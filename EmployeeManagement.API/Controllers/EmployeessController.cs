@@ -7,33 +7,34 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmployeeManagement.API.Controllers
 {
     /// <summary>
-    /// Cac api lien quan den nhan vien
+    /// Các API liên quan đến nhân viên
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeessController : ControllerBase
     {
         /// <summary>
-        /// API lay danh sach nhan vien theo dieu kien loc va phan trang
+        /// API lấy danh sách nhân viêntheo điều kiện lọc và phân trang
         /// </summary>
-        /// <param name="keyword">Tu khoa muon tim kiem (Ma nhan vien, Ten hoac So dien thoai)</param>
-        /// <param name="departmentID">Id phong ban </param>
-        /// <param name="jobPositionID">Id vi tri</param>
-        /// <param name="limit">So ban ghi muon lay</param>
-        /// <param name="offset">Vi tri ban ghi bat dau lay</param>
+        /// <param name="keyword">Từ khoá muốn tìm kiếm (Mã nhân viên, Tên và số điện thoại)</param>
+        /// <param name="departmentID">Id phòng ban </param>
+        /// <param name="jobPositionID">Id vị trí</param>
+        /// <param name="limit">Số bản ghi muốn lấy</param>
+        /// <param name="offset">Vị trí bản ghi bắt đầu lấy</param>
         /// <returns>
-        /// Tra ve mot doi tuong Pagingresult, bao gom danh sach nhan vien tren mot trang và tong so ban ghi thoa man dieu kien
+        /// Trả về một đối tượng Pagingresult, bao gồm danh sách nhân viên trên một trang và tông số bản ghi thoả man điều kiện
         /// </returns>
         [HttpGet]
-        public Pagingresult GetPaging([FromQuery] string? keyword,
+        public IActionResult GetPaging
+           ([FromQuery] string? keyword,
            [FromQuery] Guid? departmentID,
            [FromQuery] Guid? jobPositionID,
-           [FromQuery] int limit=10,
-           [FromQuery] int offset=0)
+           [FromQuery] int limit = 10,
+           [FromQuery] int offset = 0)
         {
-            return new Pagingresult
+            return Ok(new Pagingresult
             {
-                Data = new List<Employee>
+                Data = new List<object>
                 {
                     new Employee
                     {
@@ -59,7 +60,73 @@ namespace EmployeeManagement.API.Controllers
                 },
                 TotalRecords = 3
 
-            };
+            });
         }
+        /// <summary>
+        /// API Lấy chi tiết một nhân viên
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns>Đối tượng nhân viên muốn lấy
+        /// </returns>
+        [HttpGet ("{employeeTd}")]
+        public IActionResult GetEmployeeById([FromRoute]Guid employeeId)
+        {
+            return Ok(new Employee
+            {
+                Id = employeeId,
+                Code = "NV003",
+                Fullname = "Phung Van Duc",
+                Gender = Gender.Other
+            });             
+        }
+        /// <summary>
+        /// API lấy mã nhân viên mới tự động tăng 
+        /// </summary>
+        /// <returns>
+        /// Mã nhân viên mới tự động tăng
+        /// </returns>
+        [HttpGet("new-code")]
+        public IActionResult GetNewEmployeeCode()
+        {
+            return Ok("NV004");
+        }
+        /// <summary>
+        /// API thêm mới nhân viên
+        /// </summary>
+        /// <param name="newEmployee">Đối tượng nhân viên muốn thêm mới</param>
+        /// <returns>
+        /// ID của nhân viên vừa thêm mới thành công
+        /// </returns>
+        [HttpPost]
+        public IActionResult InsertEmployee([FromBody] Employee newEmployee)
+        {
+            return StatusCode(StatusCodes.Status201Created, Guid.NewGuid());
+        }
+        /// <summary>
+        /// API Sửa 
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="updateEmployee"></param>
+        /// <returns>ID của nhân viên vừa sửa
+        /// </returns>
+        [HttpPut("{employeeId}")]
+        public IActionResult UpdateEmployee(
+            [FromRoute] Guid employeeId,
+            [FromBody] Employee updateEmployee)
+        {
+            return Ok(employeeId);
     }
+        /// <summary>
+        /// API Xoá
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns>Id của nhân viên vừa xoá
+        /// </returns>
+        [HttpDelete("{employeeTd}")]
+        public IActionResult DeleteEmployee([FromRoute] Guid employeeId)
+        {
+            return Ok(employeeId);
+        }
+        
+     }
 }

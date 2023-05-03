@@ -4,6 +4,9 @@ namespace EmployeeManagement.API.Entities
 {
     public class Employee
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Guid Id { get; set; }
         public string Code { get; set; }
         public string Fullname { get; set; }

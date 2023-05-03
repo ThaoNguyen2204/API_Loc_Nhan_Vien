@@ -3,17 +3,17 @@
     public enum WorkStatus
     {
         /// <summary>
-        /// Dang lam viec
+        /// Đang làm việc
         /// </summary>
         Working = 0,
 
         /// <summary>
-        /// Da nghi viec
+        /// Đã nghỉ việc
         /// </summary>
         LeaveOffWork = 1,
 
         /// <summary>
-        /// Da nghi huu
+        /// Đã nghỉ hưu
         /// </summary>
         Retired = 2,
 

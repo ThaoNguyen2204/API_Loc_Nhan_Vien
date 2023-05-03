@@ -1,7 +1,7 @@
 ﻿namespace EmployeeManagement.API.Enums
 {
     /// <summary>
-    /// Gioi tinh
+    /// Giới tính
     /// </summary>
     public enum Gender
     {
@@ -10,11 +10,11 @@
         /// </summary>
         Male = 0,
         /// <summary>
-        /// Nu
+        /// Nữ
         /// </summary>
         Female = 1,
         /// <summary>
-        /// Khac
+        /// Khác
         /// </summary>
         Other = 2,
     }
